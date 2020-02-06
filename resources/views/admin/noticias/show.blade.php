@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Administración | Editar noticia')
+@section('titulo','Administración | ' . $noticia->titulo)
 @section('titulo2','Noticias')
 
 @section('breadcrumbs')
@@ -26,29 +26,9 @@
             </div>
             @endif
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Editar noticia: {{$noticia->id}}</h3>
-                </div>
                 <div class="card-body">
-                    <form action="{{route('noticias.update', $noticia->id)}}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="">Titulo</label>
-                                <input type="text" name="txtTitulo" class="form-control" value="{{$noticia->titulo}}">
-                        </div>
-
-                        <div class="from-group">
-                            <label for="">Cuerpo</label>
-                            <textarea name="txtCuerpo" class="form-control" cols="30" rows="12">{{$noticia->cuerpo}}</textarea>
-                        </div>
-
-                        <div class="from-group">
-                            <button class="btn btn-primary">
-                                Actualizar
-                            </button>
-                        </div>
-                    </form>
+                    <h1>{{$noticia->titulo}}</h1>
+                    <p>{{$noticia->cuerpo}}</p>
                 </div>
             </div>
         </div>

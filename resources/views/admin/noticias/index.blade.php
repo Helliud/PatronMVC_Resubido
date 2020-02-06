@@ -49,15 +49,24 @@
                                 <tr>
                                     <td>{{$noticia->titulo}}</td>
                                     <td>
-                                        <button class="btn btn-primary">
+                                    <form action="{{route('noticias.destroy', $noticia->id)}}" method="POST">
+                                        <a href="{{route('noticias.show' ,$noticia->id)}}" class="btn btn-primary">
                                             <i class="fas fa-eye"></i>
-                                        </button>
+                                        </a>
+
                                         <a class="btn btn-primary" href="{{route('noticias.edit', $noticia->id)}}">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button class="btn btn-danger">
+
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                                             <i class="fas fa-times"></i>
+                                                    
                                         </button>
+                                    
+                                    </form>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -68,6 +77,8 @@
         </div>
     </div>
 </div>
+
+
 @endsection
 
 @section('scripts')
