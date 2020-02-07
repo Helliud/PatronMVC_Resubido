@@ -7,7 +7,35 @@
 @endsection
 
 @section('contenido')
+
 <div class="container-fluid">
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <form id="deleteForm" method="POST">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar noticia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Estas seguro que quieres eliminar la noticia?
+      </div>
+      <div class="modal-footer">
+        @csrf
+        @method('DELETE')
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-danger" onclick="formSubmit()">Eliminar</button>
+      </div>
+    </div>
+      </form>
+  </div>
+</div>
+
+
     <div class="row">
         <div class="col-md-12">
             @if(Session::has('exito'))
@@ -49,7 +77,10 @@
                                 <tr>
                                     <td>{{$noticia->titulo}}</td>
                                     <td>
+
                                     <form action="{{route('noticias.destroy', $noticia->id)}}" method="POST">
+
+
                                         <a href="{{route('noticias.show' ,$noticia->id)}}" class="btn btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -60,12 +91,13 @@
 
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                                        <a href="javascript:;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="deleteData({{$noticia->id}})">
                                             <i class="fas fa-times"></i>
-                                                    
-                                        </button>
-                                    
+                                            
+                                        </a>
                                     </form>
+
+
 
                                     </td>
                                 </tr>
@@ -82,6 +114,27 @@
 @endsection
 
 @section('scripts')
+                                    <script>
+                                    $('#myModal').on('shown.bs.modal', function () {
+                                    $('#myInput').trigger('focus')})
+                                    </script>
+
+                                    <script>     
+                                    function deleteData(id)
+                                        {
+                                            var id = id;
+                                            var url = '{{ route("noticias.destroy", ":id") }}';
+                                            url = url.replace(':id', id);
+                                            $("#deleteForm").attr('action', url);
+                                        }
+
+                                        function formSubmit()
+                                        {
+                                            $("#deleteForm").submit();
+                                        }
+                                        </script>
+
+
 @endsection
 
 @section('estilos')
