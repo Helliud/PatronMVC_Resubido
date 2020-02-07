@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Noticia;
+use App\Usuario;
 
 class UsuarioController extends Controller
 {
@@ -21,10 +21,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $noticias = Noticia::all();
+        $usuarios = Usuario::all();
         $argumentos = array();
-        $argumentos['noticias'] = $noticias;
-        return view('admin.noticias.index',
+        $argumentos['usuarios'] = $usuarios;
+        return view('admin.usuarios.index',
             $argumentos);
     }
 
@@ -35,7 +35,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('admin.noticias.create');
+        return view('admin.usuarios.create');
     }
 
     /**
@@ -46,16 +46,16 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $noticia = new Noticia();
-        $noticia->titulo = $request->input('txtTitulo');
-        $noticia->cuerpo = $request->input('txtCuerpo');
-        if($noticia->save())
+        $usuario = new Usuario();
+        $usuario->titulo = $request->input('txtTitulo');
+        $usuario->cuerpo = $request->input('txtCuerpo');
+        if($usuario->save())
         {
             //Si pude guardar la noticia
-            return redirect()->route('noticias.index')->with('exito','La noticia fue guardada correctamente');
+            return redirect()->route('usuarios.index')->with('exito','La noticia fue guardada correctamente');
         }
         //Aqui no se pudo guardar
-        return redirect()->route('noticias.index')->with('error','La noticia no fue guardada correctamente');
+        return redirect()->route('usuarios.index')->with('error','La noticia no fue guardada correctamente');
     }
 
     /**
@@ -66,16 +66,16 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $noticia = Noticia::find($id);
+        $usuario = Usuario::find($id);
 
-        if($noticia){
+        if($usuario){
 
             $argumentos = array();
-            $argumentos['noticia'] = $noticia;
-            return view('admin.noticias.show', $argumentos);
+            $argumentos['usuario'] = $usuario;
+            return view('admin.usuarios.show', $argumentos);
 
         } 
-        return redirect()->route('noticias.index')->with('error', 'No se encontro la noticia');
+        return redirect()->route('usuarios.index')->with('error', 'No se encontro la noticia');
 
 
     }
@@ -88,16 +88,16 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $noticia = Noticia::find($id);
+        $noticia = Usuario::find($id);
 
         if($noticia){
 
             $argumentos = array();
             $argumentos['noticia'] = $noticia;
-            return view('admin.noticias.edit', $argumentos);
+            return view('admin.usuarios.edit', $argumentos);
 
         } 
-        return redirect()->route('noticias.index')->with('error', 'No se encontro la noticia');
+        return redirect()->route('usuarios.index')->with('error', 'No se encontro la noticia');
     }
 
     /**
@@ -109,7 +109,7 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $noticia = Noticia::find($id);
+        $noticia = Usuario::find($id);
         if($noticia){
             $noticia->titulo = $request->input('txtTitulo');
             $noticia->cuerpo = $request->input('txtCuerpo');
@@ -131,13 +131,13 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $noticia = Noticia::find($id);
-        if($noticia){
-            if($noticia->delete()){
-                return redirect()->route('noticias.index')->with('exito', 'Se pudo eliminar la noticia');
+        $usuario = Usuario::find($id);
+        if($usuario){
+            if($usuario->delete()){
+                return redirect()->route('usuarios.index')->with('exito', 'Se pudo eliminar la noticia');
             }
-            return redirect()-> route('noticias.index')->with('error', 'No se pudo eliminar la noticia');
+            return redirect()-> route('usuarios.index')->with('error', 'No se pudo eliminar la noticia');
         }
-        return redirect()-> route('noticias.index')->with('error', 'No se encontro la noticia');
+        return redirect()-> route('usuarios.index')->with('error', 'No se encontro la noticia');
     }
 }
