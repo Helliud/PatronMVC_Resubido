@@ -15,17 +15,22 @@
                 <div class="card-header">
                     <h3 class="card-title">Crear usuario</h3>
                 </div>
+                <!-- Nombre, email. password -->
                 <div class="card-body">
-                    <form action="{{route('usuarios.store')}}" method="POST">
+                    <form action="{{route('usuarios.store')}}" method="POST" autocomplete="off">
                         @csrf
                         <div class="form-group">
-                            <label for="">Titulo</label>
-                                <input type="text" name="txtTitulo" class="form-control">
-                        </div>
+                            <label for="">Nombre</label>
+                            <input type="text" name="txtNombre" class="form-control">
 
-                        <div class="from-group">
-                            <label for="">Cuerpo</label>
-                            <textarea name="txtCuerpo" class="form-control" cols="30" rows="12"></textarea>
+                            <label for="">Email</label>
+                            <input type="email" name="txtEmail" class="form-control">
+
+                            <label for="">Contraseña</label>
+                            <input type="password" name="txtContrasena" class="form-control">
+
+                            <label for="">Confirmar contraseña</label>
+                            <input type="password" name="txtContrasena" class="form-control">
                         </div>
 
                         <div class="from-group">

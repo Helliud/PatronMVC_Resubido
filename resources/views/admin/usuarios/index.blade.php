@@ -16,13 +16,13 @@
       <form id="deleteForm" method="POST">
       <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar noticia</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ¿Estas seguro que quieres eliminar la noticia?
+        ¿Estas seguro que quieres eliminar el usuario?
       </div>
       <div class="modal-footer">
         @csrf
@@ -62,7 +62,7 @@
                 </div>
                 <div class="card-body">
                     <a href="{{route('usuarios.create')}}">
-                        <i class="fas fa-plus"></i>Agregar noticia
+                        <i class="fas fa-plus"></i>Agregar usuario
                     </a>
                     <table class="table">
                         <thead>
@@ -75,23 +75,24 @@
                             <!-- Aquí van las usuarios -->
                             @foreach($usuarios as $usuarios)
                                 <tr>
-                                    <td>{{$noticia->titulo}}</td>
+                                    <td>{{$usuarios->name}}</td>
                                     <td>
 
-                                    <form action="{{route('usuarios.destroy', $noticia->id)}}" method="POST">
+                                    <form action="{{route('usuarios.destroy', $usuarios->id)}}" method="POST">
 
 
-                                        <a href="{{route('usuarios.show' ,$noticia->id)}}" class="btn btn-primary">
+                                        <a href="{{route('usuarios.show' ,$usuarios->id)}}" class="btn btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a class="btn btn-primary" href="{{route('usuarios.edit', $noticia->id)}}">
+                                        <a class="btn btn-primary" href="{{route('usuarios.edit', $usuarios->id)}}">
                                             <i class="fas fa-edit"></i>
                                         </a>
 
+
                                         @csrf
                                         @method('DELETE')
-                                        <a href="javascript:;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="deleteData({{$noticia->id}})">
+                                        <a href="javascript:;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="deleteData({{$usuarios->id}})">
                                             <i class="fas fa-times"></i>
                                             
                                         </a>

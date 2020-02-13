@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('titulo','Administración | Editar noticia')
-@section('titulo2','Noticias')
+@section('titulo','Administración | Editar usuario')
+@section('titulo2','Usuarios')
 
 @section('breadcrumbs')
 @endsection
 
 @section('contenido')
-<a class="btn btn-primary btn-sm" style="margin-bottom: 15px;" href="{{route('noticias.index')}}"><i class="fas fa-arrow-left"></i> Volver a lista de noticias</a>
+<a class="btn btn-primary btn-sm" style="margin-bottom: 15px;" href="{{route('usuarios.index')}}"><i class="fas fa-arrow-left"></i> Volver a lista de usuarios</a>
     <div class="row">
         <div class="col-md-12">
         @if(Session::has('exito'))
@@ -27,21 +27,32 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Editar noticia: {{$noticia->id}}</h3>
+                    <h3 class="card-title">Editar usuario: {{$usuario->id}}</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('noticias.update', $noticia->id)}}" method="POST">
+                    <form action="{{route('usuarios.update', $usuario->id)}}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label for="">Nombre</label>
-                                <input type="text" name="txtNombre" class="form-control" value="{{$noticia->name}}">
+                                <input type="text" name="txtNombre" class="form-control" value="{{$usuario->name}}">
                         </div>
 
                         <div class="from-group">
                             <label for="">Email</label>
-                            <input type="text" name="txtEmail" class="form-control" value="{{$noticia->email}}">
+                            <input type="email" name="txtEmail" class="form-control" value="{{$usuario->email}}">
                         </div>
+
+                        <div class="from-group">
+                            <label for="">Contraseña</label>
+                            <input type="password" name="txtContrasena" class="form-control" value="">
+                        </div>
+
+                        <div class="from-group">
+                            <label for="">Contraseña</label>
+                            <input type="password" name="txtContrasena" class="form-control" value="">
+                        </div>
+                        <br>
 
                         <div class="from-group">
                             <button class="btn btn-primary">

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Usuario;
 
-class UsuarioController extends Controller
+class UsuariosController extends Controller
 {
 
     public function __construct()
@@ -36,6 +36,8 @@ class UsuarioController extends Controller
     public function create()
     {
         return view('admin.usuarios.create');
+        
+        
     }
 
     /**
@@ -46,9 +48,17 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        $verificacion = Usuario::where('email', $request->input('txtEmail'))->first();
+
+        if($verificacion){
+            return redirect()->route('usuarios.create')->with('error', 'El usuario ' , $request->input('email'), ('ya eciste'));
+        }
+
         $usuario = new Usuario();
-        $usuario->titulo = $request->input('txtTitulo');
-        $usuario->cuerpo = $request->input('txtCuerpo');
+        $usuario->name = $request->input('txtNombre');
+        $usuario->email = $request->input('txtEmail');
+        $usuario->password = $request->input('txtContrasena');
+
         if($usuario->save())
         {
             //Si pude guardar la noticia
@@ -88,12 +98,12 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $noticia = Usuario::find($id);
+        $usuario = Usuario::find($id);
 
-        if($noticia){
+        if($usuario){
 
             $argumentos = array();
-            $argumentos['noticia'] = $noticia;
+            $argumentos['usuario'] = $usuario;
             return view('admin.usuarios.edit', $argumentos);
 
         } 
@@ -109,18 +119,19 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $noticia = Usuario::find($id);
-        if($noticia){
-            $noticia->titulo = $request->input('txtTitulo');
-            $noticia->cuerpo = $request->input('txtCuerpo');
+        $usuario = Usuario::find($id);
+        if($usuario){
+            $usuario->name = $request->input('txtNombre');
+            $usuario->email = $request->input('txtEmail');
+            $usuario->password = $request->input('txtContrasena');
 
-            if($noticia->save()){
-                return redirect()->route('noticias.edit', $id)->with('exito', 'La noticia se actualizo exitosamente');
+            if($usuario ->save()){
+                return redirect()->route('usuarios.edit', $id)->with('exito', 'El usuario se actualizo exitosamente');
 
             }
-            return redirect()->route('noticias.edit', $id)->with('error', 'No se pudo actualizar la noticia');
+            return redirect()->route('usuarios.edit', $id)->with('error', 'No se pudo actualizar el usuario');
         }
-        return redirect()->route('noticias.index')->with('error', 'No se encontro la noticia');
+        return redirect()->route('usuarios.index')->with('error', 'No se encontro el usuario');
     }
 
     /**
@@ -134,10 +145,10 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
         if($usuario){
             if($usuario->delete()){
-                return redirect()->route('usuarios.index')->with('exito', 'Se pudo eliminar la noticia');
+                return redirect()->route('usuarios.index')->with('exito', 'Se pudo eliminar el usuario');
             }
-            return redirect()-> route('usuarios.index')->with('error', 'No se pudo eliminar la noticia');
+            return redirect()-> route('usuarios.index')->with('error', 'No se pudo eliminar el usuario');
         }
-        return redirect()-> route('usuarios.index')->with('error', 'No se encontro la noticia');
+        return redirect()-> route('usuarios.index')->with('error', 'No se encontro el usuario');
     }
 }
