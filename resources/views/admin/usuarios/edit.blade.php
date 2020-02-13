@@ -45,12 +45,12 @@
 
                         <div class="from-group">
                             <label for="">Contraseña</label>
-                            <input type="password" name="txtContrasena" class="form-control" value="">
+                            <input type="password" name="txtContrasena" class="form-control" value="" id="password">
                         </div>
 
                         <div class="from-group">
-                            <label for="">Contraseña</label>
-                            <input type="password" name="txtContrasena" class="form-control" value="">
+                            <label for="">Confirmar contraseña</label>
+                            <input type="password" name="txtContrasena" class="form-control" value="" id="confirm_password">
                         </div>
                         <br>
 
@@ -68,6 +68,19 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript">
+    var password = document.getElementById("password")
+    , confirm_password = document.getElementById("confirm_password");
+    function validatePassword(){
+    if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Las contraseñas no coinciden.");
+    } else {
+        confirm_password.setCustomValidity('');
+    }
+    }
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+ </script>
 @endsection
 
 @section('estilos')

@@ -51,13 +51,13 @@ class UsuariosController extends Controller
         $verificacion = Usuario::where('email', $request->input('txtEmail'))->first();
 
         if($verificacion){
-            return redirect()->route('usuarios.create')->with('error', 'El usuario ' , $request->input('email'), ('ya eciste'));
+            return redirect()->route('usuarios.create')->with('error', 'El usuario ' . $request->input('txtEmail') . ' ya existe');
         }
 
         $usuario = new Usuario();
         $usuario->name = $request->input('txtNombre');
         $usuario->email = $request->input('txtEmail');
-        $usuario->password = $request->input('txtContrasena');
+        $usuario->password = bcrypt($request->input('txtContrasena'));
 
         if($usuario->save())
         {
@@ -123,7 +123,7 @@ class UsuariosController extends Controller
         if($usuario){
             $usuario->name = $request->input('txtNombre');
             $usuario->email = $request->input('txtEmail');
-            $usuario->password = $request->input('txtContrasena');
+            $usuario->password = bcrypt($request->input('txtContrasena'));
 
             if($usuario ->save()){
                 return redirect()->route('usuarios.edit', $id)->with('exito', 'El usuario se actualizo exitosamente');
